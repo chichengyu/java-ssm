@@ -21,11 +21,21 @@
 
     <!-- Spring整合MyBatis框架 -->
     <!-- 配置连接池 -->
-    <bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    <!-- <bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
         <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/jars?useUnicode=true&amp;characterEncoding=utf8"/>
         <property name="user" value="root"/>
         <property name="password" value=""/>
+    </bean>
+	-->
+	<!-- 加载 db.property 文件 -->
+    <content:property-placeholder location="classpath:database.properties"/>
+    <!-- 配置连接池 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driver}" />
+        <property name="jdbcUrl" value="${jdbc.url}" />
+        <property name="user" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
     </bean>
     <!-- 配置 SqlSessionFactory 工厂 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -44,6 +54,13 @@
     </bean>
 
     <!--配置Spring框架声明式事务管理-->
+	<!--
+		支持AOP的注解支持，AOP底层使用代理技术
+		JDK动态代理，要求必须有接口
+		cglib代理，生成子类对象，proxy-target-class="true" 默认使用cglib的方式
+		
+		<aop:aspectj-autoproxy proxy-target-class="true"/>
+	-->
     <!--配置事务管理器-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="datasource"/>
