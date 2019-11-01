@@ -13,7 +13,7 @@
 	http://www.springframework.org/schema/tx
 	http://www.springframework.org/schema/tx/spring-tx.xsd">
 	
-	<!-- ****** context:component-scan 只能扫描类，不能扫描包，所以这里需要配置 MapperScannerConfigurer 扫描dao接口 ***** -->
+	<!-- ****** context:component-scan 只能扫描类，不能扫描接口，所以这里需要配置 MapperScannerConfigurer 扫描dao接口 ***** -->
 	
     <!-- 开启注解的扫描，希望处理service和dao，controller不需要Spring框架去处理 -->
     <context:component-scan base-package="cn.xiaochi" >
